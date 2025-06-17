@@ -1,0 +1,81 @@
+.saved-meals-container {
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+  min-height: 100vh;
+}
+
+.dark-mode .saved-meals-container {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.meals-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.meal-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  width: 260px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.dark-mode .meal-card {
+  background: #2b2b2b;
+  border-color: #444;
+  color: #f0f0f0;
+}
+
+.meal-card img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.meal-card p,
+.meal-card li {
+  text-align: justify;
+  font-size: 0.95rem;
+}
+
+.meal-card textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  resize: vertical;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  background-color: #f8f8f8;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dark-mode .meal-card textarea {
+  background-color: #444;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+.meal-card button {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.4rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.meal-card button:hover {
+  background-color: #c82333;
+}
