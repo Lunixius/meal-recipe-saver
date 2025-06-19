@@ -16,7 +16,6 @@ const SearchMeals = () => {
     tag: '',
   });
 
-  // Fetch category and area options on mount
   useEffect(() => {
     const fetchFilters = async () => {
       const catRes = await axios.get('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
@@ -42,9 +41,7 @@ const SearchMeals = () => {
     return data.filter((meal) => {
       const categoryMatch = filters.category ? meal.strCategory === filters.category : true;
       const areaMatch = filters.area ? meal.strArea === filters.area : true;
-      const tagMatch = filters.tag
-        ? meal.strTags?.toLowerCase().includes(filters.tag.toLowerCase())
-        : true;
+      const tagMatch = filters.tag ? meal.strTags?.toLowerCase().includes(filters.tag.toLowerCase()) : true;
       return categoryMatch && areaMatch && tagMatch;
     });
   };
@@ -69,6 +66,13 @@ const SearchMeals = () => {
     setNotesMap((prev) => ({
       ...prev,
       [mealId]: note,
+    }));
+  };
+
+  const appendToNote = (mealId, text) => {
+    setNotesMap((prev) => ({
+      ...prev,
+      [mealId]: (prev[mealId] || '') + '\n' + text,
     }));
   };
 
@@ -106,7 +110,6 @@ const SearchMeals = () => {
         <button onClick={handleSearch}>Search</button>
       </div>
 
-      {/* Filter Controls */}
       <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <select value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })}>
           <option value="">All Categories</option>
@@ -136,7 +139,16 @@ const SearchMeals = () => {
             <p><strong>Category:</strong> {meal.strCategory}</p>
             <p><strong>Area:</strong> {meal.strArea}</p>
             {meal.strTags && <p><strong>Tags:</strong> {meal.strTags}</p>}
-            <p><strong>Instructions:</strong> {meal.strInstructions}</p>
+
+            <div>
+              <p style={{ textAlign: 'justify' }}>
+                <strong>Instructions:</strong> {meal.strInstructions}
+              </p>
+              <button onClick={() => appendToNote(meal.idMeal, meal.strInstructions)}>
+                📋 Copy Instructions to Notes
+              </button>
+            </div>
+
             <div>
               <strong>Ingredients:</strong>
               <ul>
@@ -144,7 +156,11 @@ const SearchMeals = () => {
                   <li key={index}>{item}</li>
                 ))}
               </ul>
+              <button onClick={() => appendToNote(meal.idMeal, extractIngredients(meal).join(', '))}>
+                📋 Copy Ingredients to Notes
+              </button>
             </div>
+
             {meal.strYoutube && (
               <p>
                 <a href={meal.strYoutube} target="_blank" rel="noopener noreferrer">
@@ -152,9 +168,10 @@ const SearchMeals = () => {
                 </a>
               </p>
             )}
+
             <textarea
               placeholder="Add notes before saving..."
-              rows="2"
+              rows="3"
               value={notesMap[meal.idMeal] || ''}
               onChange={(e) => handleNoteChange(meal.idMeal, e.target.value)}
             />
