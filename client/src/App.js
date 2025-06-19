@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import SearchMeals from './components/SearchMeals';
 import SavedMeals from './components/SavedMeals';
+import RandomMeal from './components/RandomMeal';
 import { ThemeContext } from './context/ThemeContext'; // Theme context for dark mode
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
             <Link to="/saved" style={{ color: darkMode ? '#fff' : '#000' }}>
               📚 Saved Meals
             </Link>
+            <Link to="/random" style={{ marginLeft: '1rem', color: darkMode ? '#fff' : '#000' }}>
+              🎲 Random Meal
+            </Link>
           </div>
           <button
             onClick={() => setDarkMode(prev => !prev)}
@@ -44,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SearchMeals />} />
           <Route path="/saved" element={<SavedMeals />} />
+          <Route path="/random" element={<RandomMeal />} />
         </Routes>
       </Router>
     </div>
